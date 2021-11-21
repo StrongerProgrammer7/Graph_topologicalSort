@@ -1,0 +1,101 @@
+public class TreeNode
+    {
+        private Node _root;
+ 
+        public Node Root { get => _root; set => _root = value; }
+ 
+        public Node AddNode(int inputDataNode, Node root)
+        {
+            if (root == null)
+            {
+                root = new Node(inputDataNode);
+            }
+            else
+            {
+                if (inputDataNode < root.Data)
+                {
+                    root.Left = AddNode(inputDataNode, root.Left);
+                }
+                else
+                {
+                    root.Right = AddNode(inputDataNode, root.Right);
+                }
+            }
+ 
+            return root;
+        }
+ 
+        public Node FindElement(int findData, Node root)
+        {
+            if (root == null || findData == root.Data)
+                return root;
+            else if (root.Data < findData)
+                return FindElement(findData, root.Left);
+            else
+                return FindElement(findData, root.Right);
+        }
+ 
+        public Node Minimum(Node root)
+        {
+            if (root != null)
+            {
+                if (root.Left != null) root = Minimum(root.Left);
+            }
+            return root;
+        }
+ 
+        
+ 
+        public void PrintTree(int x, int y, Node root, int delta = 0)
+        {
+            if (root != null)
+            {
+                if (delta == 0) delta = x/2;
+                Console.SetCursorPosition(x, y);
+                Console.Write(root.Data);
+                PrintTree(x-delta, y + 3, root.Left, delta / 2);
+                PrintTree(x+delta, y + 3, root.Right,delta/2);
+            }
+            
+        }
+ 
+        public void ClearTree()
+        {
+            _root = null;
+        }
+ 
+       
+ 
+        public bool IsEmpty()
+        {
+            return _root == null ? true : false;
+        }
+ 
+    }
+ 
+    public class Node
+    {
+        private int _data;
+        private Node _left;
+        private Node _right;
+ 
+        public Node()
+        {
+        }
+ 
+        public Node(int inputDataNode)
+        {
+            Data = inputDataNode;
+        }
+ 
+        public Node(int data, Node left, Node right)
+        {
+            Data = data;
+            Left = left;
+            Right = right;
+        }
+ 
+        public int Data { get => _data; set => _data = value; }
+        public Node Left { get => _left; set => _left = value; }
+        public Test.Node Right { get => _right; set => _right = value; }
+    }
